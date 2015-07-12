@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Source: message.js</title>
+    
+    
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":true,"cleverLinks":true,"default":{"outputSourceFiles":true},"applicationName":"Demo","disqus":"","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":false};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">Demo</a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Bot">
+            <span class="title">
+                <a href="Bot.html">Bot</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Bot#_modMethodHelper"><a href="Bot.html#_modMethodHelper">_modMethodHelper</a></li>
+            
+                <li data-name="Bot#_onLine"><a href="Bot.html#_onLine">_onLine</a></li>
+            
+                <li data-name="Bot#cmd_loadmod"><a href="Bot.html#cmd_loadmod">cmd_loadmod</a></li>
+            
+                <li data-name="Bot#loadMod"><a href="Bot.html#loadMod">loadMod</a></li>
+            
+                <li data-name="Bot#registerMod"><a href="Bot.html#registerMod">registerMod</a></li>
+            
+                <li data-name="Bot#writeln"><a href="Bot.html#writeln">writeln</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Message">
+            <span class="title">
+                <a href="Message.html">Message</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Message#getArgs"><a href="Message.html#getArgs">getArgs</a></li>
+            
+                <li data-name="Message#getBot"><a href="Message.html#getBot">getBot</a></li>
+            
+                <li data-name="Message#getCommand"><a href="Message.html#getCommand">getCommand</a></li>
+            
+                <li data-name="Message#getDest"><a href="Message.html#getDest">getDest</a></li>
+            
+                <li data-name="Message#getMessage"><a href="Message.html#getMessage">getMessage</a></li>
+            
+                <li data-name="Message#getMessageWithoutAddress"><a href="Message.html#getMessageWithoutAddress">getMessageWithoutAddress</a></li>
+            
+                <li data-name="Message#getSender"><a href="Message.html#getSender">getSender</a></li>
+            
+                <li data-name="Message#getSenderHost"><a href="Message.html#getSenderHost">getSenderHost</a></li>
+            
+                <li data-name="Message#getSenderNick"><a href="Message.html#getSenderNick">getSenderNick</a></li>
+            
+                <li data-name="Message#getType"><a href="Message.html#getType">getType</a></li>
+            
+                <li data-name="Message#isCommand"><a href="Message.html#isCommand">isCommand</a></li>
+            
+                <li data-name="Message#isPM"><a href="Message.html#isPM">isPM</a></li>
+            
+                <li data-name="Message#isSenderServer"><a href="Message.html#isSenderServer">isSenderServer</a></li>
+            
+                <li data-name="Message#isSenderSuperuser"><a href="Message.html#isSenderSuperuser">isSenderSuperuser</a></li>
+            
+                <li data-name="Message#makeCommand"><a href="Message.html#makeCommand">makeCommand</a></li>
+            
+                <li data-name="Message#notice"><a href="Message.html#notice">notice</a></li>
+            
+                <li data-name="Message#pm"><a href="Message.html#pm">pm</a></li>
+            
+                <li data-name="Message#reply"><a href="Message.html#reply">reply</a></li>
+            
+                <li data-name="Message#say"><a href="Message.html#say">say</a></li>
+            
+                <li data-name="Message#wasAddressed"><a href="Message.html#wasAddressed">wasAddressed</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="message.js.html">Source: message.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source "><code>/*
+ *  Copyright 2015 Simon Shields
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+
+/**
+ * @constructor
+ * @param {Bot} bot - the robot
+ * @param {string} type - the message code according to the RFC
+ * @param {string} sender - the nick!user@host of the sender
+ * @param {string} dest - the destination of the message (channel or the bot's nick)
+ * @param {string} content - the contents of the message
+ * @param {boolean} isCmd - true if the message is a command.
+ */
+function Message(bot, type, sender, dest, content, isCmd) {
+	this.bot = bot;
+	this.code = type;
+	this.sender = sender;
+	this.dest = dest;
+	this.content = content;
+	this.cmd = isCmd;
+	if (isCmd) this.makeCommand();
+	
+}
+
+/**
+ * Make this message a command (as though isCmd=true had been passed to the constructor)
+ */
+Message.prototype.makeCommand = function makeCommand() {
+	this.isCmd = true;
+	var tmp = this.content;
+	if (this.bot.config.prefix == tmp[0]) {
+		tmp = tmp.slice(1).split(' ');
+	} else {
+		tmp = tmp.split(' ').slice(1);
+	}
+	this.cmdName = tmp[0].toLowerCase();
+	this.cmdArgs = tmp.slice(1);
+}
+
+/**
+ * Get this message's bot.
+ * @return {Bot}
+ */
+Message.prototype.getBot = function getBot() {
+	return this.bot;
+}
+
+/**
+ * @return {String} the message numeric/name (PRIVMSG, etc)
+ */
+Message.prototype.getType = function getType() {
+	return this.code;
+}
+
+/**
+ * @return {string} the nick!user@host of the sender
+ */
+Message.prototype.getSender = function getSender() {
+	return this.sender;
+}
+
+/**
+ * @return {boolean} if the sender is a server (i.e no nick!user)
+ */
+ Message.prototype.isSenderServer = function isSenderServer() {
+ 	return this.sender.indexOf('!') == -1;
+ }
+
+/**
+ * @return {string} the nick of the sender
+ */
+Message.prototype.getSenderNick = function getSenderNick() {
+	return this.sender.split('!')[0];
+}
+
+/**
+ * @return {boolean} true if the user is superuser
+ */
+Message.prototype.isSenderSuperuser = function isSenderSuperuser() {
+	return this.bot.config.superusers.test(this.sender);
+}
+
+/**
+ * @return {string} the host of the sender
+ */
+Message.prototype.getSenderHost = function getSenderHost() {
+	return this.sender.split('@')[1];
+}
+
+/**
+ * @return {string} the destination of the message (##channel or bot's nick)
+ */
+Message.prototype.getDest = function getDest() {
+	return this.dest;
+}
+
+/**
+ * @return {string} the message contents
+ */
+Message.prototype.getMessage = function getMessage() {
+	return this.content;
+}
+
+/**
+ * @return {boolean} if the bot was addressed like /^nick.*? /
+ */
+Message.prototype.wasAddressed = function wasAddressed() {
+	return new RegExp('^' + this.bot.nick + '.*? ').test(this.content);
+}
+
+/**
+ * @return {string} message without any addressing at the beginning
+ */
+Message.prototype.getMessageWithoutAddress = function getMessageWithoutAddress() {
+	if (!this.wasAddressed()) return getMessage();
+	return this.content.split(' ').slice(1).join(' ');
+}
+
+/**
+ * @return {boolean} was the message sent directly to the bot?
+ */
+Message.prototype.isPM = function isPM() {
+	return this.dest[0] != '#';
+}
+
+/**
+ * Reply to the user in the channel or in PM (depending on how they sent this message)
+ * prefixing the reply with their nick if in a channel
+ *
+ * @param {string} toSend - the message to send
+ */
+Message.prototype.reply = function reply(toSend) {
+	if (this.isPM()) {
+		this.bot.writeln('PRIVMSG ' + this.getSenderNick() + ' :' + toSend);
+	} else {
+		this.bot.writeln('PRIVMSG ' + this.getDest() + ' :' + this.getSenderNick() + ': ' + toSend);
+	}
+}
+
+/**
+ * PM the sender with toSend
+ *
+ * @param {string} toSend
+ */
+Message.prototype.pm = function pm(toSend) {
+	this.bot.writeln('PRIVMSG ' + this.getSenderNick() + ' :' + toSend);
+}
+
+/**
+ * Say something in the channel or in PM, without pinging
+ *
+ * @param {string} toSend
+ */
+Message.prototype.say = function say(toSend) {
+	if (this.isPM()) {
+		this.bot.writeln('PRIVMSG ' + this.getSenderNick() + ' :' + toSend);
+	} else {
+		this.bot.writeln('PRIVMSG ' + this.getDest() + ' :' + toSend);
+	}
+}
+
+/**
+ * Send a notice to the user about something
+ *
+ * @param {string} toSend
+ */
+Message.prototype.notice = function notice(toSend) {
+	this.bot.writeln('NOTICE ' + this.getSenderNick() + ' :' + toSend);
+}
+
+
+// command stuff
+/**
+ * @return {boolean} is message a command
+ */
+Message.prototype.isCommand = function isCmd() {
+	return this.cmd;
+}
+
+/**
+ * @return {?string} command name if isCommand(), else undefined
+ */
+Message.prototype.getCommand = function getCommand() {
+	return this.cmdName;
+}
+
+/**
+ * @return {?Array&lt;string>} array of arguments if isCommand, else undefined
+ */
+Message.prototype.getArgs = function getArgs() {
+	return this.cmdArgs;
+}
+
+module.exports = Message;</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Sun Jul 12 2015 23:07:29 GMT+1000 (AUS Eastern Standard Time)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
