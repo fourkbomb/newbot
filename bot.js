@@ -105,7 +105,7 @@ Bot.prototype.writeln = function writeln(line) {
 }
 
 /**
- * Load a module.
+ * Load a module.<br />
  * Any errors thrown will be caught and returned to the caller, else null will be returned.
  * 
  * @param {string} what - the name of the module to load. Should be located in config.moduleFolder, relative to process.cwd()
@@ -128,8 +128,8 @@ Bot.prototype.loadMod = function loadMod(what) {
 }
 
 /**
- * Register a module.
- * If you have already require'd() a module and want to load it, use this
+ * Register a module.<br />
+ * If you have already <code>require</code>'d() a module and want to load it, use this
  *
  * @param {string} name - the module's name
  * @param {object} obj  - the module's object
@@ -150,8 +150,8 @@ Bot.prototype.registerMod = function registerMod(what, obj) {
 }
 
 /**
- * Initial line handler
- * This fires all the other events
+ * internal line handler<br />
+ * This fires all the other events<br />
  * You *really* shouldn't call this *at all*
  *
  * @param {Object<string,string>} msg - the parsed line of chat
@@ -228,7 +228,7 @@ Bot.prototype._onLine = function _onLine(msg, rawLine) {
 }
 
 /**
- * Internal use only
+ * Internal use only<br />
  * calls a method in all loaded modules
  *
  * @param {string} name - method's name
@@ -255,6 +255,7 @@ Bot.prototype._modMethodHelper = function _modMethodHelper(name) {
 }
 
 /**
+ * command to load a module (once again, internal use only)
  * @param {Message} msg
  * @return {boolean} always true
  */
@@ -267,6 +268,24 @@ Bot.prototype.cmd_loadmod = function cmd_loadmod(msg) {
 
 	} else msg.reply("Nope.");
 	return true;
+}
+
+/**
+ * get the bot's current nick
+ * @return {string} nick
+ */
+Bot.prototype.getNick = function getNick() {
+	return this.nick;
+}
+
+/**
+ * get the bot's config.<br />
+ * an example can be found in <a href="config_sample.js.html">config_sample.js</a>
+ *
+ * @return {Object<string,?>} config - the bot's config
+ */
+Bot.prototype.getConfig = function getConfig() {
+	return this.config;
 }
 
 
