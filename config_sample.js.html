@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Source: message.js</title>
+    <title>Source: config_sample.js</title>
     
     
     
@@ -144,7 +144,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="message.js.html">Source: message.js</h1>
+        <h1 class="page-title" data-filename="config_sample.js.html">Source: config_sample.js</h1>
         
 
 
@@ -169,195 +169,32 @@
 
 
 /**
- * @constructor
- * @param {Bot} bot - the robot
- * @param {string} type - the message code according to the RFC
- * @param {string} sender - the nick!user@host of the sender
- * @param {string} dest - the destination of the message (channel or the bot's nick)
- * @param {string} content - the contents of the message
- * @param {boolean} isCmd - true if the message is a command.
+ * newbot config
  */
-function Message(bot, type, sender, dest, content, isCmd) {
-	this.bot = bot;
-	this.code = type;
-	this.sender = sender;
-	this.dest = dest;
-	this.content = content;
-	this.cmd = isCmd;
-	if (isCmd) this.makeCommand();
-	
-}
-
-/**
- * Make this message a command (as though isCmd=true had been passed to the constructor)
- */
-Message.prototype.makeCommand = function makeCommand() {
-	this.isCmd = true;
-	var tmp = this.content;
-	if (this.bot.config.prefix == tmp[0]) {
-		tmp = tmp.slice(1).split(' ');
-	} else {
-		tmp = tmp.split(' ').slice(1);
-	}
-	this.cmdName = tmp[0].toLowerCase();
-	this.cmdArgs = tmp.slice(1);
-}
-
-/**
- * Get this message's bot.
- * @return {Bot}
- */
-Message.prototype.getBot = function getBot() {
-	return this.bot;
-}
-
-/**
- * @return {String} the message numeric/name (PRIVMSG, etc)
- */
-Message.prototype.getType = function getType() {
-	return this.code;
-}
-
-/**
- * @return {string} the nick!user@host of the sender
- */
-Message.prototype.getSender = function getSender() {
-	return this.sender;
-}
-
-/**
- * @return {boolean} if the sender is a server (i.e no nick!user)
- */
- Message.prototype.isSenderServer = function isSenderServer() {
- 	return this.sender.indexOf('!') == -1;
- }
-
-/**
- * @return {string} the nick of the sender
- */
-Message.prototype.getSenderNick = function getSenderNick() {
-	return this.sender.split('!')[0];
-}
-
-/**
- * @return {boolean} true if the user is superuser
- */
-Message.prototype.isSenderSuperuser = function isSenderSuperuser() {
-	return this.bot.config.superusers.test(this.sender);
-}
-
-/**
- * @return {string} the host of the sender
- */
-Message.prototype.getSenderHost = function getSenderHost() {
-	return this.sender.split('@')[1];
-}
-
-/**
- * @return {string} the destination of the message (##channel or bot's nick)
- */
-Message.prototype.getDest = function getDest() {
-	return this.dest;
-}
-
-/**
- * @return {string} the message contents
- */
-Message.prototype.getMessage = function getMessage() {
-	return this.content;
-}
-
-/**
- * @return {boolean} if the bot was addressed like /^nick.*? /
- */
-Message.prototype.wasAddressed = function wasAddressed() {
-	return new RegExp('^' + this.bot.nick + '.*? ').test(this.content);
-}
-
-/**
- * @return {string} message without any addressing at the beginning
- */
-Message.prototype.getMessageWithoutAddress = function getMessageWithoutAddress() {
-	if (!this.wasAddressed()) return getMessage();
-	return this.content.split(' ').slice(1).join(' ');
-}
-
-/**
- * @return {boolean} was the message sent directly to the bot?
- */
-Message.prototype.isPM = function isPM() {
-	return this.dest[0] != '#';
-}
-
-/**
- * Reply to the user in the channel or in PM (depending on how they sent this message)
- * prefixing the reply with their nick if in a channel
- *
- * @param {string} toSend - the message to send
- */
-Message.prototype.reply = function reply(toSend) {
-	if (this.isPM()) {
-		this.bot.writeln('PRIVMSG ' + this.getSenderNick() + ' :' + toSend);
-	} else {
-		this.bot.writeln('PRIVMSG ' + this.getDest() + ' :' + this.getSenderNick() + ': ' + toSend);
-	}
-}
-
-/**
- * PM the sender with toSend
- *
- * @param {string} toSend
- */
-Message.prototype.pm = function pm(toSend) {
-	this.bot.writeln('PRIVMSG ' + this.getSenderNick() + ' :' + toSend);
-}
-
-/**
- * Say something in the channel or in PM, without pinging
- *
- * @param {string} toSend
- */
-Message.prototype.say = function say(toSend) {
-	if (this.isPM()) {
-		this.bot.writeln('PRIVMSG ' + this.getSenderNick() + ' :' + toSend);
-	} else {
-		this.bot.writeln('PRIVMSG ' + this.getDest() + ' :' + toSend);
-	}
-}
-
-/**
- * Send a notice to the user about something
- *
- * @param {string} toSend
- */
-Message.prototype.notice = function notice(toSend) {
-	this.bot.writeln('NOTICE ' + this.getSenderNick() + ' :' + toSend);
-}
-
-
-// command stuff
-/**
- * @return {boolean} is message a command
- */
-Message.prototype.isCommand = function isCmd() {
-	return this.cmd;
-}
-
-/**
- * @return {?string} command name if isCommand(), else undefined
- */
-Message.prototype.getCommand = function getCommand() {
-	return this.cmdName;
-}
-
-/**
- * @return {?Array&lt;string>} array of arguments if isCommand, else undefined
- */
-Message.prototype.getArgs = function getArgs() {
-	return this.cmdArgs;
-}
-
-module.exports = Message;</code></pre>
+module.exports = {
+	// host of the IRC server
+	'host': 'chat.freenode.net',
+	// port of the IRC server
+	'port': 6667,
+	// does nothing right now, coming soon(tm)
+	'mods': [],
+	// nick of the bot
+	'nick': 'BOT_____1',
+	// username
+	'user': 'newbot',
+	// password to be used for /PASS
+	'pass': false, // if no pass
+	// real name
+	'rname': 'Wouldn\'t you like to know?',
+	// location of modules
+	'moduleFolder': 'modules',
+	// command prefix
+	'prefix': ']',
+	// super users
+	'superusers': /fo?rkbo?mb/,
+	// channels to auto-join
+	'chans': ['##newbotthebestbot']
+};</code></pre>
         </article>
     </section>
 

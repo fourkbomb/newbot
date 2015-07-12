@@ -15,7 +15,7 @@
  */
 
 
-/*
+/**
  * newbot config
  */
 module.exports = {
