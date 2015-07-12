@@ -14,7 +14,7 @@ function Message(bot, type, sender, dest, content, isCmd) {
 	this.dest = dest;
 	this.content = content;
 	this.cmd = isCmd;
-	if (isCmd) makeCommand();
+	if (isCmd) this.makeCommand();
 	
 }
 

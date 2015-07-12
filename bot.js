@@ -208,44 +208,6 @@ Bot.prototype._onLine = function _onLine(msg, rawLine) {
 		console.log(res.stack);
 		return;
 	}
-
-
-
-
-
-	/*if (msg.getType() == 'PRIVMSG' && msg.dest[0] !== '#' && this.config.superusers.test(msg.getSenderNick())) {
-		if (msg.getMessage()[0] == ':') {
-			this.writeln(msg.getMessage().slice(1));
-		} else if (msg.getMessage()[0] == '%') {
-			try {
-				msg.reply(eval(msg.getMessage().slice(1)));
-			} catch (e) {
-				msg.reply('' + e);
-			}
-		} else if (msg.getMessage().startsWith(this.nick)) {
-			msg.reply(msg.getMessage().trim().slice(this.nick.length+1).replace(/^\W+/, ''));
-		}
-		//(msg.getMessage());
-	} else if (msg.code == 'PRIVMSG') {*/
-		/*try {
-			this.writeln('PRIVMSG ' + msg.dest + ' :' + eval(msg.msg.slice(1).replace('require', 'console.log').replace('while', 'if')));
-		} catch (e) {
-			this.writeln('PRIVMSG ' + msg.dest + ' : ' + e);
-		}*/
-		/*if (this.reject.test(msg.sender)) {
-			this.writeln('PRIVMSG ' + msg.dest + ' :' + msg.sender.slice(1).split('!')[0] + ': ' + this.rejectMsg);
-			return;
-		}*/
-		/*if (new RegExp(this.nick + '.*? ').test(msg.getMessage().startsWith(this.nick))) {
-			if (msg.getMessage().indexOf('forkbomb') != -1) {
-				msg.reply('No comment.');
-				return;
-			}
-			msg.reply(msg.getMessage().trim().split(' ').slice(1).join(' '));
-		}*/
-		/*if (msg.msg.trim().slice(-1) == '0') return;
-		this.writeln(msg.msg.slice(1));*/
-	//}
 }
 
 /**
@@ -253,6 +215,7 @@ Bot.prototype._onLine = function _onLine(msg, rawLine) {
  * calls a method in all loaded modules
  *
  * @param {string} name - method's name
+ * @return {boolean|Error} true if method called, false if no method, Error if error occurred
  */
 Bot.prototype._modMethodHelper = function _modMethodHelper(name) {
 	var args = [];
@@ -274,6 +237,10 @@ Bot.prototype._modMethodHelper = function _modMethodHelper(name) {
 	return false;
 }
 
+/**
+ * @param {Message} msg
+ * @return {boolean} always true
+ */
 Bot.prototype.cmd_loadmod = function cmd_loadmod(msg) {
 	if (msg.isSenderSuperuser()) {
 		var res = msg.getBot().loadMod(msg.getArgs()[0]);
