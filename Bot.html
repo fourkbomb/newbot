@@ -62,15 +62,23 @@
             
                 <li data-name="Bot#_onLine"><a href="Bot.html#_onLine">_onLine</a></li>
             
+                <li data-name="Bot#clearCache"><a href="Bot.html#clearCache">clearCache</a></li>
+            
                 <li data-name="Bot#cmd_loadmod"><a href="Bot.html#cmd_loadmod">cmd_loadmod</a></li>
+            
+                <li data-name="Bot#connect"><a href="Bot.html#connect">connect</a></li>
             
                 <li data-name="Bot#getConfig"><a href="Bot.html#getConfig">getConfig</a></li>
             
                 <li data-name="Bot#getNick"><a href="Bot.html#getNick">getNick</a></li>
             
+                <li data-name="Bot#getSock"><a href="Bot.html#getSock">getSock</a></li>
+            
                 <li data-name="Bot#loadMod"><a href="Bot.html#loadMod">loadMod</a></li>
             
                 <li data-name="Bot#registerMod"><a href="Bot.html#registerMod">registerMod</a></li>
+            
+                <li data-name="Bot#reloadConfig"><a href="Bot.html#reloadConfig">reloadConfig</a></li>
             
                 <li data-name="Bot#writeln"><a href="Bot.html#writeln">writeln</a></li>
             
@@ -132,6 +140,8 @@
                 <li data-name="Message#reply"><a href="Message.html#reply">reply</a></li>
             
                 <li data-name="Message#say"><a href="Message.html#say">say</a></li>
+            
+                <li data-name="Message#setBot"><a href="Message.html#setBot">setBot</a></li>
             
                 <li data-name="Message#wasAddressed"><a href="Message.html#wasAddressed">wasAddressed</a></li>
             
@@ -307,7 +317,7 @@
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line237">line 237</a>
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line299">line 299</a>
         </div>
         
     </div>
@@ -456,7 +466,7 @@ calls a method in all loaded modules</p>
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line160">line 160</a>
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line222">line 222</a>
         </div>
         
     </div>
@@ -590,6 +600,77 @@ You <em>really</em> shouldn't call this <em>at all</em></p>
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="clearCache">
+            
+            clearCache<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line150">line 150</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>clear require.cache. might have unintended side-effects, who knows.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="cmd_loadmod">
             
             cmd_loadmod<span class="signature">(msg)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
@@ -597,7 +678,7 @@ You <em>really</em> shouldn't call this <em>at all</em></p>
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line262">line 262</a>
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line324">line 324</a>
         </div>
         
     </div>
@@ -735,6 +816,129 @@ You <em>really</em> shouldn't call this <em>at all</em></p>
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="connect">
+            
+            connect<span class="signature">(socket)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line46">line 46</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Connect to the IRC network.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>socket</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">net.Socket</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        <span class="nullable">nullable</span>
+                    
+                        
+                    
+                
+                <p>to use instead of making a new one</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="getConfig">
             
             getConfig<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Object.&lt;string, ?>}</span>
@@ -742,7 +946,7 @@ You <em>really</em> shouldn't call this <em>at all</em></p>
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line287">line 287</a>
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line351">line 351</a>
         </div>
         
     </div>
@@ -843,7 +1047,7 @@ an example can be found in <a href="config_sample.js.html">config_sample.js</a><
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line277">line 277</a>
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line341">line 341</a>
         </div>
         
     </div>
@@ -936,6 +1140,102 @@ an example can be found in <a href="config_sample.js.html">config_sample.js</a><
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="getSock">
+            
+            getSock<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{net.Socket}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line118">line 118</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        net.Socket
+                        
+                    
+            </td>
+            <td class="description last">the bot's raw socket</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="loadMod">
             
             loadMod<span class="signature">(what)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Error}</span>
@@ -943,7 +1243,7 @@ an example can be found in <a href="config_sample.js.html">config_sample.js</a><
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line114">line 114</a>
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line175">line 175</a>
         </div>
         
     </div>
@@ -1089,7 +1389,7 @@ Any errors thrown will be caught and returned to the caller, else null will be r
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line138">line 138</a>
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line200">line 200</a>
         </div>
         
     </div>
@@ -1251,6 +1551,106 @@ If you have already <code>require</code>'d() a module and want to load it, use t
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id="reloadConfig">
+            
+            reloadConfig<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line128">line 128</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>reload the bot's config</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        boolean
+                        
+                    
+            </td>
+            <td class="description last">true if successful</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id="writeln">
             
             writeln<span class="signature">(line)</span>
@@ -1258,7 +1658,7 @@ If you have already <code>require</code>'d() a module and want to load it, use t
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line102">line 102</a>
+            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line163">line 163</a>
         </div>
         
     </div>
@@ -1380,7 +1780,7 @@ If you have already <code>require</code>'d() a module and want to load it, use t
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Sun Jul 12 2015 23:19:24 GMT+1000 (AUS Eastern Standard Time)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Mon Jul 13 2015 23:16:03 GMT+1000 (AUS Eastern Standard Time)
         </footer>
     </div>
 </div>
