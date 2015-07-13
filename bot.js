@@ -34,12 +34,26 @@ var net = require('net'),
 function Bot(config) {
 	EventEmitter.call(this);
 	this.config = config;
+}
+
+util.inherits(Bot, EventEmitter);
+
+/**
+ * Connect to the IRC network.
+
+ * @param {?net.Socket} socket to use instead of making a new one
+ */
+Bot.prototype.connect = function connect(socket) {
 	if (config.dummy) {
 		// oh, ok :(
 		return;
 	}
+	if (!this.loaded) {
+		this.reloadConfig();
+	}
+	this.loaded = true;
 	var that = this;
-	var conn = net.connect(config.port, config.host, function() {
+	var conn = socket ? socket : net.connect(config.port, config.host, function() {
 		console.log('Connected to ' + config.host + ':' + config.port);
 			if (config.pass) that.writeln('PASS ' + config.pass);
 			that.writeln('NICK ' + config.nick);
@@ -50,12 +64,21 @@ function Bot(config) {
 
 	this.nick = config.nick;
 	this.modules = {
-		'base': {
+		'core': {
 			'cmd_loadmod': this.cmd_loadmod
 		}
 	};
-	this.ready = false;
-	var ready = false;
+	console.log('loading modules...');
+	for (var i = 0; i < that.config.mods.length; i++) {
+		var res = that.loadMod(that.config.mods[i]);
+		if (res) {
+			console.error('Error loading module "' + that.config.mods[i] + '":', res);
+			console.error(res.stack);
+		}
+	}
+	console.log('loaded modules.');
+	this.ready = socket ? true : false;
+	var ready = this.ready;
 	this.nick = config.nick;
 	this.socket.on('data', function(data) {
 		var lines = data.split('\r\n');
@@ -81,17 +104,55 @@ function Bot(config) {
 				that._onLine(msgObj, lines[el]);
 			} else {
 				if (msgObj['code'] == '376') {
-					console.log('we are go');					
 					that.writeln('JOIN ' + that.config.chans.join(','));
 					ready = true;
 				}
 			}
 		}
 	});
-
 }
 
-util.inherits(Bot, EventEmitter);
+/**
+ * @return {net.Socket} the bot's raw socket
+ */
+Bot.prototype.getSock = function getSock() {
+	return this.socket;
+}
+
+
+/**
+ * reload the bot's config
+ *
+ * @return {boolean} true if successful
+ */
+Bot.prototype.reloadConfig = function reloadConfig() {
+	if (!this.config.config_path || typeof this.config.config_path !== 'string') return false;
+	console.log('reloading config from', this.config.config_path);
+	delete require.cache[path.join(process.cwd(), this.config.config_path)];
+	try {
+		var config = require('./' + this.config.config_path);
+	} catch (e) {
+		console.error('failed to load config from "' + this.config.config_path + '":', e);
+		console.error(e.stack);
+		return false;
+	}
+	if (!config.config_path) {
+		config.config_path = this.config.config_path; // so if you screw up you can still reload
+	}
+
+	this.config = config;
+	return true;
+}
+
+/**
+ * clear require.cache. might have unintended side-effects, who knows.
+ */
+Bot.prototype.clearCache = function clearCache() {
+	for (var el in require.cache) {
+		delete require.cache[el];
+	}
+}
+
 
 /**
  * Write a raw IRC message to the socket
@@ -100,8 +161,8 @@ util.inherits(Bot, EventEmitter);
  *
  */
 Bot.prototype.writeln = function writeln(line) {
-	console.log('-->', line);
-	this.socket.write(line + '\r\n');
+	console.log('-->', line.replace('\r\n', ''));
+	this.socket.write(line.replace('\r\n', '')+ '\r\n');
 }
 
 /**
@@ -114,7 +175,7 @@ Bot.prototype.writeln = function writeln(line) {
 Bot.prototype.loadMod = function loadMod(what) {
 	var e;
 	var fullPath = path.join(process.cwd(), this.config.moduleFolder || 'modules', what + '.js');
-	if (fullPath in require.cache) {
+	if (fullPath in require.cache || what in this.modules) {
 		delete this.modules[what];
 		delete require.cache[fullPath];
 	}
@@ -122,6 +183,7 @@ Bot.prototype.loadMod = function loadMod(what) {
 	try {
 		return this.registerMod(what, require(fullPath));
 	} catch (e) {
+		console.log(e);
 		console.log(e.stack);
 		return e;
 	}
@@ -263,8 +325,10 @@ Bot.prototype.cmd_loadmod = function cmd_loadmod(msg) {
 	if (msg.isSenderSuperuser()) {
 		var res = msg.getBot().loadMod(msg.getArgs()[0]);
 		if (res !== null) {
-			e.reply('An error occurrred: ' + res.stack);
+			msg.reply('An error occurrred: ' + res);
+			return;
 		}
+		msg.reply("Success.");
 
 	} else msg.reply("Nope.");
 	return true;

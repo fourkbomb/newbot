@@ -17,6 +17,31 @@
 
 var Bot = require('./bot');
 var config = require('./config');
+var util = require('util'),
+	path = require('path');
 var b = new Bot(config);
+console.log(util.inspect(Bot.prototype));
+b.connect();
+
+var fake_module = {
+	'cmd_reload': function(msg) {
+		if (msg.isSenderSuperuser()) {
+			msg.reply("I'll be unresponsive for a second or so, hold on...");
+			// get the socket, clear out event listeners and reload the bot modules
+			b.clearCache();
+			var sock = b.getSock();
+			sock.removeAllListeners();
+
+			Bot = require('./bot');
+			config = require('./config');
+			b = new Bot(config);
+			b.connect(sock);
+			b.registerMod('run', fake_module);
+			msg.setBot(b);
+			msg.reply("I'm back!");
+		}
+	}
+}
+b.registerMod('run', fake_module);
 
 // you can do whatever here - load modules, etc

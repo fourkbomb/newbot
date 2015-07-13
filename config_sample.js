@@ -23,7 +23,7 @@ module.exports = {
 	'host': 'chat.freenode.net',
 	// port of the IRC server
 	'port': 6667,
-	// does nothing right now, coming soon(tm)
+	// list of modules to load before joining all channels
 	'mods': [],
 	// nick of the bot
 	'nick': 'BOT_____1',
@@ -40,5 +40,7 @@ module.exports = {
 	// super users
 	'superusers': /fo?rkbo?mb/,
 	// channels to auto-join
-	'chans': ['##newbotthebestbot']
+	'chans': ['##newbotthebestbot'],
+	// does nothing
+	'config_path': 'config.js'
 };

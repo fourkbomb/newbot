@@ -59,6 +59,14 @@ Message.prototype.getBot = function getBot() {
 }
 
 /**
+ * Set the message's bot.
+ * @param {Bot} new bot
+ */
+Message.prototype.setBot = function setBot(b) {
+	this.bot = b;
+}
+
+/**
  * @return {String} the message numeric/name (PRIVMSG, etc)
  */
 Message.prototype.getType = function getType() {
