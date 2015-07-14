@@ -39,7 +39,8 @@
 			} else {
 				msg.reply(msg.getMessageWithoutAddress());
 			}
+			return true;
 		}
-		return true;
+		
 	}
 })(module.exports);
