@@ -22,7 +22,9 @@ module.exports = {
 	// host of the IRC server
 	'host': 'chat.freenode.net',
 	// port of the IRC server
-	'port': 6667,
+	'port': 6697,
+	// enable ssl?
+	'ssl': true,
 	// list of modules to load before joining all channels
 	'mods': [],
 	// nick of the bot

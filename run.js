@@ -15,7 +15,7 @@
  */
 
 
-var Bot = require('./bot');
+var Bot = require('./lib/bot');
 var config = require('./config');
 var util = require('util'),
 	path = require('path');
@@ -32,7 +32,7 @@ var fake_module = {
 			var sock = b.getSock();
 			sock.removeAllListeners();
 
-			Bot = require('./bot');
+			Bot = require('./lib/bot');
 			config = require('./config');
 			b = new Bot(config);
 			b.connect(sock);
