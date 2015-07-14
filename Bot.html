@@ -58,13 +58,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="Bot#_modMethodHelper"><a href="Bot.html#_modMethodHelper">_modMethodHelper</a></li>
-            
-                <li data-name="Bot#_onLine"><a href="Bot.html#_onLine">_onLine</a></li>
-            
                 <li data-name="Bot#clearCache"><a href="Bot.html#clearCache">clearCache</a></li>
-            
-                <li data-name="Bot#cmd_loadmod"><a href="Bot.html#cmd_loadmod">cmd_loadmod</a></li>
             
                 <li data-name="Bot#connect"><a href="Bot.html#connect">connect</a></li>
             
@@ -183,7 +177,7 @@
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line34">line 34</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line33">line 33</a>
         </div>
         
     </div>
@@ -310,296 +304,6 @@
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="_modMethodHelper">
-            
-            _modMethodHelper<span class="signature">(name)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean|Error}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line299">line 299</a>
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Internal use only<br />
-calls a method in all loaded modules</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>name</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>method's name</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        boolean
-                         | 
-                    
-                        Error
-                        
-                    
-            </td>
-            <td class="description last">true if method called, false if no method, Error if error occurred</td>
-        </tr>
-    
-    </tbody>
-</table>
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
-        <h4 class="name" id="_onLine">
-            
-            _onLine<span class="signature">(msg, rawLine)</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line222">line 222</a>
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>internal line handler<br />
-This fires all the other events<br />
-You <em>really</em> shouldn't call this <em>at all</em></p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>msg</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object.&lt;string, string></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>the parsed line of chat</p></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>rawLine</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                <p>the raw line of chat</p></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id="clearCache">
             
             clearCache<span class="signature">()</span>
@@ -607,7 +311,7 @@ You <em>really</em> shouldn't call this <em>at all</em></p>
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line150">line 150</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line150">line 150</a>
         </div>
         
     </div>
@@ -671,151 +375,6 @@ You <em>really</em> shouldn't call this <em>at all</em></p>
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id="cmd_loadmod">
-            
-            cmd_loadmod<span class="signature">(msg)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line324">line 324</a>
-        </div>
-        
-    </div>
-
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>command to load a module (once again, internal use only)</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>msg</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Message.html">Message</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                </td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        boolean
-                        
-                    
-            </td>
-            <td class="description last">always true</td>
-        </tr>
-    
-    </tbody>
-</table>
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id="connect">
             
             connect<span class="signature">(socket)</span>
@@ -823,7 +382,7 @@ You <em>really</em> shouldn't call this <em>at all</em></p>
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line46">line 46</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line45">line 45</a>
         </div>
         
     </div>
@@ -946,7 +505,7 @@ You <em>really</em> shouldn't call this <em>at all</em></p>
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line351">line 351</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line370">line 370</a>
         </div>
         
     </div>
@@ -1047,7 +606,7 @@ an example can be found in <a href="config_sample.js.html">config_sample.js</a><
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line341">line 341</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line360">line 360</a>
         </div>
         
     </div>
@@ -1147,7 +706,7 @@ an example can be found in <a href="config_sample.js.html">config_sample.js</a><
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line118">line 118</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line118">line 118</a>
         </div>
         
     </div>
@@ -1243,7 +802,7 @@ an example can be found in <a href="config_sample.js.html">config_sample.js</a><
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line175">line 175</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line176">line 176</a>
         </div>
         
     </div>
@@ -1389,7 +948,7 @@ Any errors thrown will be caught and returned to the caller, else null will be r
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line200">line 200</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line201">line 201</a>
         </div>
         
     </div>
@@ -1558,7 +1117,7 @@ If you have already <code>require</code>'d() a module and want to load it, use t
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line128">line 128</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line128">line 128</a>
         </div>
         
     </div>
@@ -1658,7 +1217,7 @@ If you have already <code>require</code>'d() a module and want to load it, use t
     
         
         <div class="tag-source">
-            <a href="bot.js.html">bot.js</a>, <a href="bot.js.html#line163">line 163</a>
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line163">line 163</a>
         </div>
         
     </div>
@@ -1780,7 +1339,7 @@ If you have already <code>require</code>'d() a module and want to load it, use t
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Mon Jul 13 2015 23:16:03 GMT+1000 (AUS Eastern Standard Time)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Jul 14 2015 23:27:45 GMT+1000 (AUS Eastern Standard Time)
         </footer>
     </div>
 </div>

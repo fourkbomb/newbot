@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Source: bot.js</title>
+    <title>Source: lib/bot.js</title>
     
     
     
@@ -58,13 +58,7 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="Bot#_modMethodHelper"><a href="Bot.html#_modMethodHelper">_modMethodHelper</a></li>
-            
-                <li data-name="Bot#_onLine"><a href="Bot.html#_onLine">_onLine</a></li>
-            
                 <li data-name="Bot#clearCache"><a href="Bot.html#clearCache">clearCache</a></li>
-            
-                <li data-name="Bot#cmd_loadmod"><a href="Bot.html#cmd_loadmod">cmd_loadmod</a></li>
             
                 <li data-name="Bot#connect"><a href="Bot.html#connect">connect</a></li>
             
@@ -154,7 +148,7 @@
     </ul>
 </div>
     <div class="main">
-        <h1 class="page-title" data-filename="bot.js.html">Source: bot.js</h1>
+        <h1 class="page-title" data-filename="lib_bot.js.html">Source: lib/bot.js</h1>
         
 
 
@@ -183,7 +177,6 @@ var net = require('net'),
 	process = require('process'),
 	EventEmitter = require('async-cancelable-events'),
 	//EventEmitter = require('events').EventEmitter,
-	config = require('./config'),
 	Message = require('./message'),
 	util = require('util'),
 	path = require('path');
@@ -207,7 +200,7 @@ util.inherits(Bot, EventEmitter);
  * @param {?net.Socket} socket to use instead of making a new one
  */
 Bot.prototype.connect = function connect(socket) {
-	if (config.dummy) {
+	if (this.config.dummy) {
 		// oh, ok :(
 		return;
 	}
@@ -216,19 +209,21 @@ Bot.prototype.connect = function connect(socket) {
 	}
 	this.loaded = true;
 	var that = this;
-	var conn = socket ? socket : net.connect(config.port, config.host, function() {
-		console.log('Connected to ' + config.host + ':' + config.port);
-			if (config.pass) that.writeln('PASS ' + config.pass);
-			that.writeln('NICK ' + config.nick);
-			that.writeln('USER ' + config.user + ' 8 * :' + config.rname);
+	if (this.config.ssl) net = require('tls');
+	var conn = socket ? socket : net.connect(this.config.port, this.config.host, function() {
+		console.log('Connected to ' + that.config.host + ':' + that.config.port);
+			if (that.config.pass) that.writeln('PASS ' + that.config.pass);
+			that.writeln('NICK ' + that.config.nick);
+			that.writeln('USER ' + that.config.user + ' 8 * :' + that.config.rname);
 	});
 	conn.setEncoding('utf-8');
 	this.socket = conn;
 
-	this.nick = config.nick;
+	this.nick = this.config.nick;
 	this.modules = {
 		'core': {
-			'cmd_loadmod': this.cmd_loadmod
+			'cmd_loadmod': this.cmd_loadmod,
+			'cmd_quit': this.cmd_quit
 		}
 	};
 	console.log('loading modules...');
@@ -242,7 +237,6 @@ Bot.prototype.connect = function connect(socket) {
 	console.log('loaded modules.');
 	this.ready = socket ? true : false;
 	var ready = this.ready;
-	this.nick = config.nick;
 	this.socket.on('data', function(data) {
 		var lines = data.split('\r\n');
 		var el;
@@ -324,8 +318,9 @@ Bot.prototype.clearCache = function clearCache() {
  *
  */
 Bot.prototype.writeln = function writeln(line) {
-	console.log('-->', line.replace('\r\n', ''));
-	this.socket.write(line.replace('\r\n', '')+ '\r\n');
+	line=line.replace(/\r/g, '').replace(/\n/g, '');
+	console.log('-->', line);
+	this.socket.write(line+ '\r\n');
 }
 
 /**
@@ -379,6 +374,7 @@ Bot.prototype.registerMod = function registerMod(what, obj) {
  * This fires all the other events&lt;br />
  * You *really* shouldn't call this *at all*
  *
+ * @access private
  * @param {Object&lt;string,string>} msg - the parsed line of chat
  * @param {string} rawLine - the raw line of chat
  */
@@ -456,6 +452,7 @@ Bot.prototype._onLine = function _onLine(msg, rawLine) {
  * Internal use only&lt;br />
  * calls a method in all loaded modules
  *
+ * @access private
  * @param {string} name - method's name
  * @return {boolean|Error} true if method called, false if no method, Error if error occurred
  */
@@ -465,10 +462,12 @@ Bot.prototype._modMethodHelper = function _modMethodHelper(name) {
 		if (i == 0) continue;
 		args.push(arguments[i]);
 	}
+	console.log(name);
 	for (var mod in this.modules) {
 		if (this.modules.hasOwnProperty(mod) &amp;&amp; this.modules[mod].hasOwnProperty(name)) {
 			try {
 				if (this.modules[mod][name].apply(this.modules[mod], args)) {
+					console.log(' found in ' + mod);
 					return true;
 				}
 			} catch (e) {
@@ -481,6 +480,7 @@ Bot.prototype._modMethodHelper = function _modMethodHelper(name) {
 
 /**
  * command to load a module (once again, internal use only)
+ * @access private
  * @param {Message} msg
  * @return {boolean} always true
  */
@@ -494,6 +494,19 @@ Bot.prototype.cmd_loadmod = function cmd_loadmod(msg) {
 		msg.reply("Success.");
 
 	} else msg.reply("Nope.");
+	return true;
+}
+
+/**
+ * command to quit
+ * @access private
+ * @param {Message} msg
+ * @return {boolean} true
+ */
+Bot.prototype.cmd_quit = function cmd_quit(msg) {
+	if (msg.isSenderSuperuser()) {
+		msg.getBot().writeln("QUIT :OOM killed");
+	}
 	return true;
 }
 
@@ -531,7 +544,7 @@ module.exports = Bot;
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Mon Jul 13 2015 23:16:03 GMT+1000 (AUS Eastern Standard Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Jul 14 2015 23:27:45 GMT+1000 (AUS Eastern Standard Time)
         </footer>
     </div>
 </div>
