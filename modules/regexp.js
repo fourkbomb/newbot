@@ -1,3 +1,20 @@
+/*
+ *  Copyright 2015 Simon Shields
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+
 (function(re) {
 	re.userSpokenCache = {};
 	//			s/ @nick      mode   sep  pat sep sub sep flags
@@ -8,7 +25,7 @@
 		if (magicRE.test(text)) {
 			// re match
 			var match = magicRE.exec(text);
-			var dest = match[1].trim().replace(/[:,]$/, '') || msg.getSenderNick();
+			var dest = match[1] ? match[1].trim().replace(/[:,]$/, '') : msg.getSenderNick();
 			if (dest in re.userSpokenCache) {
 				var lines = re.userSpokenCache[dest];
 				var flags = match[8] || '';
@@ -28,9 +45,9 @@
 				repl = repl.replace(eligible, toSub);
 				re.userSpokenCache[dest][i] = repl;
 				if (repl.trim() == '') {
-					msg.say(msg.getSenderNick() + (match[1] ? ' thinks ' + match[1] + ' meant to say' : ' said') + ' nothing');
+					msg.say(msg.getSenderNick() + (match[1] ? ' thinks ' + dest + ' meant to say' : ' said') + ' nothing');
 				} else {
-					msg.say(msg.getSenderNick() + (match[1] ? ' thinks ' + match[1] : '') + ' meant: ' + repl);
+					msg.say(msg.getSenderNick() + (match[1] ? ' thinks ' + dest : '') + ' meant: ' + repl);
 				}
 			} else {
 				msg.reply((match[1] ? match[1] + ' has' : 'You have') + 'n\'t said anything for me to hear yet!');
