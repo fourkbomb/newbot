@@ -43,6 +43,11 @@ module.exports = {
 	'superusers': /fo?rkbo?mb/,
 	// channels to auto-join
 	'chans': ['##newbotthebestbot'],
+	// Google API key, optional. Modules depending on this will not add functionality if this is not set.
+	'google_api_key': false,
+	// Google Custom Search Engine ID. Instructions on creating a proper search engine are here: http://stackoverflow.com/a/11206266/2197297
+	// Only necessary if you wish to use the 'google' module.
+	'google_cs_id': false,
 	// does nothing
 	'config_path': 'config.js'
 };
