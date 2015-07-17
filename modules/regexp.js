@@ -18,7 +18,7 @@
 (function(re) {
 	re.userSpokenCache = {};
 	//			s/ @nick      mode   sep  pat sep sub sep flags
-	var magicRE = /^(\w+?.? )?(s)(.)(.*?)(\3)(.*?)?(\3([gi0-9]+)?)?$/;
+	var magicRE = /^(\w+?.? )?(s)([^A-Za-z0-9])(.*?)(\3)(.*?)?(\3([gi0-9]+)?)?$/;
 	re.onMsg = function onMsg(msg) {
 		var text = msg.getMessage();
 		console.log('onMsg',text);
