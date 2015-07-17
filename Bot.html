@@ -58,6 +58,8 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Bot#callRoleProvider"><a href="Bot.html#callRoleProvider">callRoleProvider</a></li>
+            
                 <li data-name="Bot#clearCache"><a href="Bot.html#clearCache">clearCache</a></li>
             
                 <li data-name="Bot#connect"><a href="Bot.html#connect">connect</a></li>
@@ -67,6 +69,8 @@
                 <li data-name="Bot#getNick"><a href="Bot.html#getNick">getNick</a></li>
             
                 <li data-name="Bot#getSock"><a href="Bot.html#getSock">getSock</a></li>
+            
+                <li data-name="Bot#hasRoleProvider"><a href="Bot.html#hasRoleProvider">hasRoleProvider</a></li>
             
                 <li data-name="Bot#loadMod"><a href="Bot.html#loadMod">loadMod</a></li>
             
@@ -301,6 +305,127 @@
         <h3 class="subsection-title">Methods</h3>
         
         <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="callRoleProvider">
+            
+            callRoleProvider<span class="signature">(role)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line398">line 398</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Call a 'role' provider - which provides a common piece of functionality.<br />
+For example, the 'urlshortener' provider might provide a url shortener.
+Depending on the module used it could use goo.gl/bit.ly/is.gd/etc.<br />
+<br />
+Provide any arguments to the role provider here.<br />
+For example, the 'urlshortener' would take a URL and a callback</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>role</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>role to request</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
             
 <dt>
     <div class="nameContainer">
@@ -781,6 +906,147 @@ an example can be found in <a href="config_sample.js.html">config_sample.js</a><
                     
             </td>
             <td class="description last">the bot's raw socket</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id="hasRoleProvider">
+            
+            hasRoleProvider<span class="signature">(role)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="lib_bot.js.html">lib/bot.js</a>, <a href="lib_bot.js.html#line378">line 378</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>role</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>role to look up. (e.g. urlshortener)</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        boolean
+                        
+                    
+            </td>
+            <td class="description last">true if there is a role provider for 'role'</td>
         </tr>
     
     </tbody>
@@ -1339,7 +1605,7 @@ If you have already <code>require</code>'d() a module and want to load it, use t
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Tue Jul 14 2015 23:27:45 GMT+1000 (AUS Eastern Standard Time)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Fri Jul 17 2015 23:08:39 GMT+1000 (AUS Eastern Standard Time)
         </footer>
     </div>
 </div>
