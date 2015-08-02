@@ -1,0 +1,20 @@
+{
+  "name": "newbot",
+  "version": "1.0.0",
+  "description": "idk",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keepcalm444/newbot"
+  },
+  "author": "keepcalm444",
+  "license": "Apache-2",
+  "dependencies": {
+    "async-cancelable-events": "0.0.6",
+    "request": "^2.58.0",
+    "xml2js": "^0.4.9"
+  }
+}
