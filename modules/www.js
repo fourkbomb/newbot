@@ -15,9 +15,32 @@
  */
 
 var request = require('request'),
-	uri = require('url');
+	uri = require('url'),
+	util = require('util');
 
  (function(www) {
+
+ 	function commify(bigNum) {
+ 		bigNum = String(Math.round(bigNum));
+ 		var result = '';
+ 		for (var i = 0; i < bigNum.length; i++) {
+ 			if (i > 0 && i % 3 == 0) {
+ 				result = ',' + result;
+ 			}
+ 			result = bigNum[bigNum.length - (i+1)] + result;
+ 		}
+ 		return result;
+ 	}
+ 	function getSize(bytes) {
+ 		unitIdx = 0;
+ 		units = ['B', 'KB', 'MB', 'GB', 'TB'];
+ 		while (bytes > 10000 && unitIdx < units.length) {
+ 			bytes /= 1000;
+ 			unitIdx++;
+ 		}
+ 		return commify(bytes) + units[unitIdx];
+
+ 	}
 
  	www.httpRegex = /(?:^|\s)(https?:\/\/[-A-Za-z0-9+&@#\/%?=~_()|!:,.;]*[-A-Za-z0-9+&@#\/%=~_()|]*)(?:$|\s)/;
 
@@ -35,7 +58,6 @@ var request = require('request'),
  				return;
  			}
  		}
- 		console.log('request ' + url);
  		request(url, function(error, response, body) {
  			if (response.headers['content-type'].startsWith('text/html')) {
  				var titleRegexp = /<title(?: .*?)?>(.*)<\/title>/;
@@ -46,13 +68,16 @@ var request = require('request'),
  					msg.say('[No title] • ' + parsed.protocol + '//' + parsed.host);
  				}
  			} else {
- 				msg.say(url + ': ' + response.headers['content-type'] + ', Unknown length');
+ 				var length = 'Unknown length';
+ 				if (response.headers['content-length']) {
+ 					length = getSize(response.headers['content-length']);
+ 				}
+ 				msg.say(url + ': ' + response.headers['content-type'] + ', ' + length);
  			}
  		});
  	}
 
  	www.onMsg = function(msg) {
- 		console.log('Got msg');
  		if (www.httpRegex.test(msg.getMessage())) {
  			var match, m = msg.getMessage();
  			if (www.httpRegex.test(m)) {
