@@ -48,6 +48,13 @@ module.exports = {
 	// Google Custom Search Engine ID. Instructions on creating a proper search engine are here: http://stackoverflow.com/a/11206266/2197297
 	// Only necessary if you wish to use the 'google' module.
 	'google_cs_id': false,
+	// Grok Learning information. Only necessary if you wish to use the 'grok' module
+	'grok': {
+		'ck_discourse': false, // the 'grok_discourse' cookie
+		'ck_session': false, // the 'grok_session' cookie
+		'ck_t': false, // the '_t' cookie
+		'notify_chan': '##ncss_challenge' // channel to send new post notifications to.
+	}
 	// does nothing
 	'config_path': 'config.js'
 };

@@ -58,8 +58,15 @@ var request = require('request'),
  				return;
  			}
  		}
- 		request(url, function(error, response, body) {
- 			if (response.headers['content-type'].startsWith('text/html')) {
+ 		var opts = {
+ 			'url': url,
+ 			'headers': {
+ 				'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:41.0) Gecko/20100101 Firefox/41.0' // seems legit
+ 			}
+ 		};
+ 		request(opts, function(error, response, body) {
+ 			if (error) return;
+ 			if (response.headers['content-type'] && response.headers['content-type'].startsWith('text/html')) {
  				var titleRegexp = /<title(?: .*?)?>(.*)<\/title>/;
  				if (titleRegexp.test(body)) {
  					var title = titleRegexp.exec(body)[1];
