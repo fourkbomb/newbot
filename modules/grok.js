@@ -34,11 +34,11 @@ var request = require('request'),
 	grok.init = function(bot) {
 		_bot = bot;
 		if (INTERVAL_ID) return;
-		var grok = bot.getConfig().grok;
-		grok_session = grok.ck_session;
-		grok_discourse = grok.ck_discourse;
-		grok_t = grok.ck_t;
-		grok.notify_chan = grok.notify_chan;
+		var cfg = bot.getConfig().grok;
+		grok_session = cfg.ck_session;
+		grok_discourse = cfg.ck_discourse;
+		grok_t = cfg.ck_t;
+		grok.notify_chan = cfg.notify_chan;
 		loadCategories();
 		resetSeenPosts();
 	}
@@ -111,8 +111,9 @@ var request = require('request'),
 
 	function get_post_msg(json, is_new) {
 		var m = moment(is_new ? json.created_at : json.last_posted_at);
+		var uname = json.last_poster_username[0] + '\u200B' + Array.prototype.slice.call(json.last_poster_username, 1).join('');
 		return "'\x02" + json.title + "\x0F' in " + categories[json.category_id] + " at \x02" + m.format("ddd, hh:mm:ss a") + "\x0F. "
-						+ json.posts_count + " post" + (json.posts_count == 1 ? "" : "s") + " - most recent by @" + json.last_poster_username + ". "
+						+ json.posts_count + " post" + (json.posts_count == 1 ? "" : "s") + " - most recent by @" + uname + ". "
 						+ json.like_count + " likes, " + json.views + " views. \x02https://ncss.ninja/t/" + json.id + "\x0F";
 	}
 	function getPostDateIdent(json) {
@@ -128,7 +129,7 @@ var request = require('request'),
 			if (catIDs.indexOf(json.category_id) == -1) return;
 			new_seen_posts[getPostDateIdent(json)] = true;
 			if (getPostDateIdent(json) in grok.seen_posts) return;
-			_bot.writeln("PRIVMSG " + grok.notify_chan + " :New forum post in " + get_post_msg(json));
+			_bot.writeln("PRIVMSG " + grok.notify_chan + " :New forum post in " + get_post_msg(json, false));
 		}, function() { // called at the end
 			grok.seen_posts = new_seen_posts;
 			console.log('done');
