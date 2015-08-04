@@ -29,8 +29,7 @@ var request = require('request'),
 	var _bot;
 	var categories = {};
 	grok.seen_posts = {};
-
-	var INTERVAL_ID;
+	grok.INTERVAL_ID = false;
 	grok.init = function(bot) {
 		_bot = bot;
 		if (INTERVAL_ID) return;
@@ -44,8 +43,8 @@ var request = require('request'),
 	}
 
 	grok.unload = function() {
-		console.log('clear grok.poll interval: ' + INTERVAL_ID);
-		clearInterval(INTERVAL_ID);
+		console.log('clear grok.poll interval: ' + grok.INTERVAL_ID);
+		clearInterval(grok.INTERVAL_ID);
 	}
 
 	function getCookie() {
@@ -104,14 +103,23 @@ var request = require('request'),
 		forEachLatestPost(function(json) {
 			grok.seen_posts[getPostDateIdent(json)] = true;
 		}, function() {
-			if (INTERVAL_ID) clearInterval(INTERVAL_ID);
-			setInterval(grok.poll, 60000);
+			if (grok.INTERVAL_ID) clearInterval(grok.INTERVAL_ID);
+			grok.INTERVAL_ID = setInterval(grok.poll, 60000);
 		})
 	}
 
-	function get_post_msg(json, is_new) {
+	function get_post_msg(json) {
+		var is_new = false;
+		if (json.posts_count == 1) {
+			is_new = true;
+		}
 		var m = moment(is_new ? json.created_at : json.last_posted_at);
 		var uname = json.last_poster_username[0] + '\u200B' + Array.prototype.slice.call(json.last_poster_username, 1).join('');
+		if (is_new) {
+			return "'\x02" + json.title + "\x0F' in " + categories[json.category_id] + " at \x02" + m.format("ddd, hh:mm:ss a") + "\x0F. "
+						+ "by @\x02" + uname + "\x0F. "
+						+ json.views + " views. \x02https://ncss.ninja/t/" + json.id + "\x0F"; 
+		}
 		return "'\x02" + json.title + "\x0F' in " + categories[json.category_id] + " at \x02" + m.format("ddd, hh:mm:ss a") + "\x0F. "
 						+ json.posts_count + " post" + (json.posts_count == 1 ? "" : "s") + " - most recent by @" + uname + ". "
 						+ json.like_count + " likes, " + json.views + " views. \x02https://ncss.ninja/t/" + json.id + "\x0F";
@@ -129,7 +137,11 @@ var request = require('request'),
 			if (catIDs.indexOf(json.category_id) == -1) return;
 			new_seen_posts[getPostDateIdent(json)] = true;
 			if (getPostDateIdent(json) in grok.seen_posts) return;
-			_bot.writeln("PRIVMSG " + grok.notify_chan + " :New forum post in " + get_post_msg(json, false));
+			if (json.posts_count == 1) {
+				_bot.writeln("PRIVMSG " + grok.notify_chan + " :New forum topic! " + get_post_msg(json));
+			} else {
+				_bot.writeln("PRIVMSG " + grok.notify_chan + " :New forum post in " + get_post_msg(json));
+			}
 		}, function() { // called at the end
 			grok.seen_posts = new_seen_posts;
 			console.log('done');
