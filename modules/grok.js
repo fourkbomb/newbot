@@ -118,7 +118,8 @@ var request = require('request'),
 			is_new = true;
 		}
 		var m = moment(is_new ? json.created_at : json.last_posted_at);
-		var uname = json.last_poster_username[0] + '\u200B' + Array.prototype.slice.call(json.last_poster_username, 1).join('');
+		var uname = json.last_poster_username;
+		uname = uname.slice(0, -1) + '\u200D' + uname[uname.length - 1];
 		if (is_new) {
 			return "'\x02" + json.title + "\x0F' in " + categories[json.category_id] + " at \x02" + m.format("ddd, hh:mm:ss a") + "\x0F. "
 						+ "by @\x02" + uname + "\x0F. "
