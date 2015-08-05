@@ -68,11 +68,12 @@ var request = require('request'),
  			if (error) return;
  			if (response.headers['content-type'] && response.headers['content-type'].startsWith('text/html')) {
  				var titleRegexp = /<title(?: .*?)?>(.*)<\/title>/;
+ 				var host = parsed.host;
  				if (titleRegexp.test(body)) {
  					var title = titleRegexp.exec(body)[1];
- 					msg.say(title + ' • ' + parsed.protocol + '//' + parsed.host);
+ 					msg.say(host + ': ' + title);
  				} else {
- 					msg.say('[No title] • ' + parsed.protocol + '//' + parsed.host);
+ 					msg.say(host + ': [No title]');
  				}
  			} else {
  				var length = 'Unknown length';
