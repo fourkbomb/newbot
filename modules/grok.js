@@ -18,18 +18,19 @@ var request = require('request'),
 	fs = require('fs');
 //request.setMaxListeners(9001);
 (function(grok){
+	var USER_AGENT = 'newbot.grokscraper (like Gecko; rv:1.0) AppleWebKit/367.5 Gecko/20100101 Firefox/41.0';
 	var DISCOURSE_URL = 'https://forum.groklearning.com';
 	var DISCOURSE_API_QS = {}; // just in case.
 	var catTitleMatch = /^ch15/;
 	var catIDs = [];
-	var grok_discourse = false;
-	var grok_session = false;
-	var grok_t = false;
-	grok.notify_chan = false;
+	var grok_discourse = null;
+	var grok_session = null;
+	var grok_t = null;
+	grok.notify_chan = null;
 	var _bot;
 	var categories = {};
 	grok.seen_posts = {};
-	grok.INTERVAL_ID = false;
+	grok.INTERVAL_ID = null;
 	grok.init = function(bot) {
 		_bot = bot;
 		if (INTERVAL_ID) return;
@@ -57,7 +58,7 @@ var request = require('request'),
 		request({
 			'url': DISCOURSE_URL + '/categories.json',
 			'headers': {
-				'User-Agent': 'newbot.grokscraper (like Gecko; rv:1.0) AppleWebKit/367.5 Gecko/20100101 Firefox/41.0',
+				'User-Agent': USER_AGENT,
 				'Cookie': getCookie()
 			}
 		}, function(error, response, body) {
@@ -84,7 +85,7 @@ var request = require('request'),
 			'url': DISCOURSE_URL + '/latest.json',
 			'qs': DISCOURSE_API_QS,
 			'headers': {
-				'User-Agent': 'newbot.grokscraper (like Gecko; rv:1.0) AppleWebKit/367.5 Gecko/20100101 Firefox/41.0',
+				'User-Agent': USER_AGENT,
 				'Cookie': getCookie()
 			}
 		}, function(error, response, body) {
