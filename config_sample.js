@@ -50,9 +50,10 @@ module.exports = {
 	'google_cs_id': false,
 	// Grok Learning information. Only necessary if you wish to use the 'grok' module
 	'grok': {
-		'ck_discourse': false, // the 'grok_discourse' cookie
-		'ck_session': false, // the 'grok_session' cookie
-		'ck_t': false, // the '_t' cookie
+		'ck_discourse': null, // the 'grok_discourse' cookie
+		'ck_session': null, // the 'grok_session' cookie
+		'ck_t': null, // the '_t' cookie
+		'ignore_threads': [12942, 12975], // thread IDs to not notify about
 		'notify_chan': '##ncss_challenge' // channel to send new post notifications to.
 	}
 	// does nothing
