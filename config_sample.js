@@ -54,6 +54,7 @@ module.exports = {
 		'ck_session': null, // the 'grok_session' cookie
 		'ck_t': null, // the '_t' cookie
 		'ignore_threads': [12942, 12975], // thread IDs to not notify about
+		'link_to_post': true, // true => link to forum.groklearning but straight to latest post, false => use ncss.ninja
 		'notify_chan': '##ncss_challenge' // channel to send new post notifications to.
 	}
 	// does nothing
