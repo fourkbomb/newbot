@@ -30,6 +30,7 @@ var request = require('request'),
 	var _bot;
 	var categories = {};
 	grok.seen_posts = {};
+	grok.ignore_thread = [];
 	grok.INTERVAL_ID = null;
 	grok.init = function(bot) {
 		_bot = bot;
@@ -39,6 +40,8 @@ var request = require('request'),
 		grok_discourse = cfg.ck_discourse;
 		grok_t = cfg.ck_t;
 		grok.notify_chan = cfg.notify_chan;
+		if (cfg.ignore_threads)
+			grok.ignore_threads = cfg.ignore_threads;
 		loadCategories();
 		resetSeenPosts();
 	}
@@ -136,6 +139,7 @@ var request = require('request'),
 		console.log('polling...');
 		forEachLatestPost(function(json) { // for each
 			if (catIDs.indexOf(json.category_id) == -1) return;
+			if (grok.ignore_threads.indexOf(json.id) != -1) return;
 			new_seen_posts[getPostDateIdent(json)] = true;
 			if (getPostDateIdent(json) in grok.seen_posts) return;
 			if (json.posts_count == 1) {
