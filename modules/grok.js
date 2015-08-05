@@ -34,7 +34,7 @@ var request = require('request'),
 	grok.INTERVAL_ID = null;
 	grok.init = function(bot) {
 		_bot = bot;
-		if (INTERVAL_ID) return;
+		if (grok.INTERVAL_ID) return;
 		var cfg = bot.getConfig().grok;
 		grok_session = cfg.ck_session;
 		grok_discourse = cfg.ck_discourse;
