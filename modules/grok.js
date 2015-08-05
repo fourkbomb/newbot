@@ -121,14 +121,16 @@ var request = require('request'),
 		var uname = json.last_poster_username;
 		uname = uname.slice(0, -1) + '\u200D' + uname[uname.length - 1];
 		var url = _bot.getConfig().grok.link_to_post ? ('https://forum.groklearning.com/t/-/' + json.id + '/' + json.posts_count) : 'https://ncss.ninja/t/' + json.id;
+		var view_str = ' view' + (json.views == 1 ? '' : 's');
+		var like_str = ' like' + (json.like_count == 1 ? '' : 's');
 		if (is_new) {
 			return "'\x02" + json.title + "\x0F' in " + categories[json.category_id] + " at \x02" + m.format("ddd, hh:mm:ss a") + "\x0F. "
 						+ "by @\x02" + uname + "\x0F. "
-						+ json.views + " views. \x02" + url + "\x0F"; 
+						+ json.views + view_str + ". \x02" + url + "\x0F"; 
 		}
 		return "'\x02" + json.title + "\x0F' in " + categories[json.category_id] + " at \x02" + m.format("ddd, hh:mm:ss a") + "\x0F. "
 						+ json.posts_count + " post" + (json.posts_count == 1 ? "" : "s") + " - most recent by @" + uname + ". "
-						+ json.like_count + " likes, " + json.views + " views. \x02" + url + "\x0F";
+						+ json.like_count + like_str + ", " + json.views + view_str + ". \x02" + url + "\x0F";
 	}
 	function getPostDateIdent(json) {
 		var id = moment(json.last_posted_at).valueOf() + '$' + json.id;
