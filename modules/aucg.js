@@ -24,7 +24,7 @@
 	/**
 	* @param {Message} msg
 	*/
-	var SHIA = ['Go and do your maths',
+	var SHIA = [
 		'Do it, just do it!',
 		'Don’t let your dreams be dreams.',
 		'Yesterday you said tomorrow.',
@@ -39,12 +39,13 @@
 		'YES YOU CAN!',
 		'JUST DO IT!',
 		'If you’re tired of starting over, stop giving up.'];
-var idx = 0;
+	var idx = 0;
 	m.onMsg = function(msg) {
 		//console.log('my moment!', msg.wasAddressed());
-		var match = 'auscompgeek';
-		if (msg.getSenderHost().slice(-match.length) == match) {
-			msg.reply(SHIA[idx++]);
+		//var match = 'auscompgeek';
+		//if (msg.getSenderHost().slice(-match.length) == match) {
+		if (/should be/.test(msg.getMessage())) {
+			msg.say(SHIA[idx++]);
 			idx %= SHIA.length;
 			return true;
 		}
