@@ -93,9 +93,10 @@ var request = require('request'),
  				var url = match[1];
  				getURLTitle(msg, url);
  			}
+            return true;
  			//msg.reply("Nice URL");
  		}
- 		return true;
+ 		return false;
  	}
 
  })(module.exports)
