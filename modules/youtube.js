@@ -38,7 +38,7 @@
  		return result;
  	}
 
- 	function getYoutubeMsg(id, callback) {
+ 	function getYoutubeMsg(id, showURL, callback) {
  		var query = {
  			'id': id,
  			'part': 'statistics,snippet',
@@ -54,8 +54,8 @@
  				likePct *= 100;
  				likePct = Math.round(likePct);
  				callback(r.snippet.title + ' • ' + r.snippet.channelTitle + ' • ' + likePct + '% like • '
- 					+ commify(r.statistics.commentCount) + ' comments • ' + commify(r.statistics.viewCount) + ' views • '
- 					+ 'http://youtu.be/' + id);
+ 					+ commify(r.statistics.commentCount) + ' comments • ' + commify(r.statistics.viewCount) + ' views'
+ 					+ (showURL ? (' • http://youtu.be/' + id) : ''));
  			} else {
  				callback("[Failed to get video metadata] - http://youtu.be/" + id);
  			}
@@ -66,7 +66,7 @@
  		var u = uri.parse(url, true);
  		if (u.pathname != '/watch') return false;
  		if (u.query.v) {
- 			getYoutubeMsg(u.query.v, cb);
+ 			getYoutubeMsg(u.query.v, false, cb);
  			return true;
  		}
  		return false;
@@ -76,7 +76,7 @@
  	yt['youtu_be'] = function(url, cb) {
  		var u = uri.parse(url);
  		if (u.pathname.length > 1) {
- 			getYoutubeMsg(Array.prototype.slice.call(u.pathname, 1).join(''), cb);
+ 			getYoutubeMsg(Array.prototype.slice.call(u.pathname, 1).join(''), false, cb);
  			return true;
  		}
  		return false;
@@ -98,7 +98,7 @@
 				var idx = 0;
 				while (!r.items[idx].id.videoId) idx++;
 				var id = r.items[idx].id.videoId;
-				getYoutubeMsg(id, function(m) {
+				getYoutubeMsg(id, true, function(m) {
 					msg.reply(m);
 				});
 
@@ -113,7 +113,7 @@
  	}
 
  	yt.cmd_ytid = function(msg) {
- 		getYoutubeMsg(msg.getArgs()[0], function(m) {
+ 		getYoutubeMsg(msg.getArgs()[0], true, function(m) {
  			msg.reply(m);
  		});
  	}
