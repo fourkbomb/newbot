@@ -54,7 +54,6 @@ var xml2js = require('xml2js');
 
  	wp['en_wikipedia_org'] = function(url, cb) {
  		url = uri.parse(url);
- 		console.log('hi it\'s me');
  		console.dir(url);
  		if (url.query) return false;
  		var query = {
@@ -80,7 +79,7 @@ var xml2js = require('xml2js');
  				for (var i = 0; i < keys.length; i++) {
  					if (j[keys[i]].title) break;
  				}
- 				var extract = j[keys[i]].extract.replace(/<\w.*?>/g, '');
+ 				var extract = j[keys[i]].extract.replace(/<\/?\w.*?>/g, '');
  				extract = Array.prototype.slice.call(extract, 0, 300).join('');
  				extract = extract.split('. ').slice(0,-1).join('. ');
  				cb(j[keys[i]].title + ' • ' + extract + '.');
