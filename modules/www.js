@@ -88,8 +88,9 @@ var request = require('request'),
  	www.onMsg = function(msg) {
  		if (www.httpRegex.test(msg.getMessage())) {
  			var match, m = msg.getMessage();
- 			if (www.httpRegex.test(m)) {
+ 			while (www.httpRegex.test(m)) {
  				var match = www.httpRegex.exec(m);
+				m = m.replace(www.httpRegex, "");
  				var url = match[1];
  				getURLTitle(msg, url);
  			}
