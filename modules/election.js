@@ -24,7 +24,11 @@ var entities = require('entities');
 	var do_changes = true;
 	var cached_msg;
 	var msgQueue = [];
-	var watched_seats = ['Banks'];
+	var watched_seats = ['Cowan', 'Capricornia', 'Hindmarsh', 'Forde'];
+	var firstRun = true;
+	var captureOPGT = false;
+	var lastOPGT = "";
+	var GROUP_TRENDS = {};
 	function callback_OnlineLists(obj) {
 		var old = JSON.parse(JSON.stringify(electorates));
 		CUR_SEAT_DATA = obj.Erads.Elections.Election.Chambers.Chamber;
@@ -105,6 +109,7 @@ var entities = require('entities');
 	e.unload = function() {
 		clearInterval(id);
 		clearInterval(id2);
+		clearInterval(id3);
 	}
 
 	function zfill(str) {
@@ -164,7 +169,7 @@ var entities = require('entities');
 			msg += cand[i].Party.PartyCode + ": " + cand[i].PredictedPrimary.Percent + "% (" +
 				cand[i].PredictedPrimary.Swing + "% swing)" + ", ";
 		}
-		msg += e.CountedPct + "% counted, " + e.NoOfPollingPlaces.Reporting2CP + "/" + e.NoOfPollingPlaces.Total + " booths counted.";
+		msg += e.CountedPct + "% counted, " + e.NoOfPollingPlaces.Reporting2CP + "(2CP)," + e.NoOfPollingPlaces.ReportingPrimary + "(Primary)/" + e.NoOfPollingPlaces.Total + " booths counted.";
 		if (e.IsKeySeat) {
 			msg += " Key Seat!";
 		}
@@ -199,8 +204,8 @@ var entities = require('entities');
 	}
 
 	function callback_OnlinePartyGroupTrends(obj) {
-		var trend = obj.Erads.Elections.Election.Chambers.Chamber.Trends.Trend[0];
-		console.log(trend);
+		GROUP_TRENDS = obj.Erads.Elections.Election.Chambers.Chamber.Trends.Trend;
+		var trend = GROUP_TRENDS[0];
 		var parties = trend.PartyGroups.PartyGroup;
 		var msg = "Current seat counts: ";
 		for (var i = 0; i < parties.length; i++) {
@@ -217,12 +222,30 @@ var entities = require('entities');
 			msg += "AEC prediction: " + trend.PredictionString;
 		}
 		msg += ". " + trend.CountedPct + "% counted.";
-		cached_msg.say(msg);
-
+		if (captureOPGT) {
+			captureOPGT = false;
+			OPGT_poll_callback(msg);
+		} else {
+			lastOPGT = msg;
+			cached_msg.say(msg);
+		}
 	}
 
+	function OPGT_poll_callback(msg) {
+		if (firstRun) {
+			lastOPGT = msg;
+			firstRun = false;
+			return;
+		}
+		if (msg != lastOPGT) {
+			cached_msg.say("Update: " + msg);
+		}
+	}
+
+
 	e.cmd_seats = function(msg) {
-		cached_msg = msg;
+		if (msg)
+			cached_msg = msg;
 		request({
 			'uri': ABC_SEAT_STATUS
 		}, function(error, response, body) {
@@ -238,6 +261,11 @@ var entities = require('entities');
 			}
 		});
 	}
+
+	var id3 = setInterval(function() {
+		captureOPGT = true;
+		e.cmd_seats(false);
+	}, 1000 * 60 * 5);
 
 
 
