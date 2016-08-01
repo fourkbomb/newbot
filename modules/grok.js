@@ -97,6 +97,8 @@ var request = require('request'),
 				for (var topic in json) {
 					cb_during(json[topic]);
 				}
+			} else {
+				console.writeline(error, response.statusCode);
 			}
 			if (typeof cb_end == 'function') cb_end();
 		});
@@ -142,10 +144,20 @@ var request = require('request'),
 		var new_seen_posts = {};
 		console.log('polling...');
 		forEachLatestPost(function(json) { // for each
-			if (catIDs.indexOf(json.category_id) == -1) return;
-			if (grok.ignore_threads.indexOf(json.id) != -1) return;
+			grok.last_post = json
+			if (catIDs.indexOf(json.category_id) == -1) {
+				console.log('rejected ' + json.id + ' because bad cat');
+				return;
+			}
+			if (grok.ignore_threads.indexOf(json.id) != -1) {
+				console.log('rejected ' + json.id + ' because ignored');
+				return;
+			}
 			new_seen_posts[getPostDateIdent(json)] = true;
-			if (getPostDateIdent(json) in grok.seen_posts) return;
+			if (getPostDateIdent(json) in grok.seen_posts) {
+				console.log('rejected ' + json.id + ' because already seen');
+				return;
+			}
 			if (json.posts_count == 1) {
 				_bot.writeln("PRIVMSG " + grok.notify_chan + " :New forum topic! " + get_post_msg(json));
 			} else {
