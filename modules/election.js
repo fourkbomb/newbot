@@ -24,7 +24,7 @@ var entities = require('entities');
 	var do_changes = true;
 	var cached_msg;
 	var msgQueue = [];
-	var watched_seats = ['Cowan', 'Capricornia', 'Hindmarsh', 'Forde'];
+	var watched_seats = ['Hindmarsh', 'Herbert']
 	var firstRun = true;
 	var captureOPGT = false;
 	var lastOPGT = "";
@@ -44,10 +44,10 @@ var entities = require('entities');
 		if (old == {}) return;
 		for (var k in watched_seats) {
 			k = watched_seats[k];
-			console.log(k);
+			if (old[k] == null) continue;
 			if (genmsg(old[k], k) != genmsg(nnew[k], k)) {
 				console.log('# CHANGED ###################################################3');
-				var res = genmsg(nnew[k], k);
+				var res = genmsg(nnew[k], k, old[k]);
 				msgQueue.push('Update: ' + res);
 			}
 		}
@@ -107,6 +107,7 @@ var entities = require('entities');
 	var id2 = setInterval(sendMsgQ, 1000);
 
 	e.unload = function() {
+		cached_msg = null;
 		clearInterval(id);
 		clearInterval(id2);
 		clearInterval(id3);
@@ -117,7 +118,7 @@ var entities = require('entities');
 		return str;
 	}
 
-	function genmsg(e, seat) {
+	function genmsg(e, seat, old) {
 		if (e == null) return "No results yet for " + seat + ".";
 		var p = e.ElectoratePredictionSuppressed;
 		if (e.Swingdial == null || e.LeadingCandidate == null) return "No results yet for " + seat + ".";
@@ -129,6 +130,13 @@ var entities = require('entities');
 		var cdt0 = sd[0].Party.PartyCode;
 		var cdt1 = sd[1].Party.PartyCode;
 		var date = new Date(e.LastUpdateTime);
+		var voteDiff = Math.abs(Number(sd[0].Predicted2CP.Votes) - Number(sd[1].Predicted2CP.Votes));
+		if (old) {
+			var oldsd = old.Swingdial.Candidate;
+			var oldDiff = Math.abs(Number(oldsd[0].Predicted2CP.Votes) - Number(oldsd[1].Predicted2CP.Votes));
+			var dv = "" + (voteDiff - oldDiff);
+			if (dv[0] != '-') dv = "+" + dv;
+		}
 		var message = "Results for " + seat + ": ";
 		message += p.Result2CPPct + "% " + e.LeadingCandidate.Party.PartyCode
 		if (cdt0 != e.LeadingCandidate.Party.PartyCode) {
@@ -136,9 +144,13 @@ var entities = require('entities');
 		} else {
 			message += " (v " + cdt1 + "), ";
 		}
-		message += p.Result2CPSwingString + ". Prediction: " + p.PredictionString + ". ";
+		message += p.Result2CPSwingString + " (" + voteDiff + " votes ahead";
+		if (old) {
+			message += ", " + dv;
+		}
+		message += "). Prediction: " + p.PredictionString + ". ";
 		message += "Currently held by " + e.HoldingParty.ShortName + " with a " + e.Margin + "% margin. ";
-		message += + e.CountedPct + "% counted. Updated at " + date.getUTCHours() + ":" + zfill(date.getMinutes().toString()) + ".";
+		message += + e.CountedPct + "% counted. Updated: " + zfill(date.getUTCDate().toString()) + "/" + zfill((date.getUTCMonth() +1).toString()) + ", " + date.getUTCHours() + ":" + zfill(date.getMinutes().toString()) + ".";
 		return message;
 	}
 
@@ -169,7 +181,11 @@ var entities = require('entities');
 			msg += cand[i].Party.PartyCode + ": " + cand[i].PredictedPrimary.Percent + "% (" +
 				cand[i].PredictedPrimary.Swing + "% swing)" + ", ";
 		}
-		msg += e.CountedPct + "% counted, " + e.NoOfPollingPlaces.Reporting2CP + "(2CP)," + e.NoOfPollingPlaces.ReportingPrimary + "(Primary)/" + e.NoOfPollingPlaces.Total + " booths counted.";
+		msg += e.CountedPct + "% counted, ";
+		if (e.NoOfPollingPlaces)
+			msg += e.NoOfPollingPlaces.Reporting2CP + "(2CP)," + e.NoOfPollingPlaces.ReportingPrimary + "(Primary)/" + e.NoOfPollingPlaces.Total + " booths counted.";
+		else
+			msg += "no polling booth data available.";
 		if (e.IsKeySeat) {
 			msg += " Key Seat!";
 		}
@@ -210,7 +226,7 @@ var entities = require('entities');
 		var msg = "Current seat counts: ";
 		for (var i = 0; i < parties.length; i++) {
 			var p = parties[i];
-			msg += p.PartyGroupCode.replace("L/NP", "LNP") + ": " + p.SeatsExcludingEarlyVotes.Won + " won, " 
+			msg += p.PartyGroupCode.replace("L/NP", "LNP") + ": " + p.SeatsExcludingEarlyVotes.Won + " won, "
 				if (p.SeatsExcludingEarlyVotes.Likely > 0)
 					msg += p.SeatsExcludingEarlyVotes.Likely + " likely - ";
 			msg += p.PredictedPrimary.Percent + "% primary, (" + p.PredictedPrimary.Swing + "% swing), ";
@@ -238,6 +254,8 @@ var entities = require('entities');
 			return;
 		}
 		if (msg != lastOPGT) {
+			lastOPGT = msg;
+			if (cached_msg)
 			cached_msg.say("Update: " + msg);
 		}
 	}
